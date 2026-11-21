@@ -1,0 +1,7 @@
+{
+  "envId": "unfair-rook-d3gum8kdyd3761bc5",
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "cloudrun": {
+    "name": "shuati-admin-api"
+  }
+}
