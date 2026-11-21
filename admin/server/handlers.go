@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"sort"
 	"strconv"
@@ -180,8 +181,10 @@ func (s *Server) handleOverview(w http.ResponseWriter, r *http.Request) {
 	for _, name := range collections {
 		n, err := s.cloud.Count(name, map[string]interface{}{})
 		if err != nil {
-			fail(w, http.StatusBadGateway, "统计 "+name+" 失败: "+err.Error())
-			return
+			// 集合可能尚未创建（如 quiz_users），按 0 处理，避免整个概览页失败
+			log.Printf("[warn] count %s failed: %v", name, err)
+			counts[name] = 0
+			continue
 		}
 		counts[name] = n
 	}
@@ -312,13 +315,14 @@ func (s *Server) handleUsers(w http.ResponseWriter, r *http.Request) {
 	offset, limit := parsePage(r)
 	list, err := s.cloud.Query("quiz_users", map[string]interface{}{}, offset, limit, `[{"field":"lastLoginAt","direction":"desc"}]`)
 	if err != nil {
-		fail(w, http.StatusBadGateway, "读取用户失败: "+err.Error())
+		// 集合未创建时返回空列表，不报错
+		log.Printf("[warn] query quiz_users failed: %v", err)
+		ok(w, map[string]interface{}{"list": []interface{}{}, "total": 0, "offset": offset, "limit": limit})
 		return
 	}
 	total, err := s.cloud.Count("quiz_users", map[string]interface{}{})
 	if err != nil {
-		fail(w, http.StatusBadGateway, "统计用户失败: "+err.Error())
-		return
+		total = len(list)
 	}
 
 	// 为每个用户补充答题次数
