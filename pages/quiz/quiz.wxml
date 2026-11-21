@@ -1,0 +1,90 @@
+<!--pages/quiz/quiz.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 顶部信息栏 -->
+  <view class="top-bar">
+    <view class="top-info">
+      <text class="category-name">{{categoryName}}</text>
+      <text class="timer">⏱ {{timeText}}</text>
+    </view>
+    <view class="progress-info">
+      <text>第 {{currentIndex + 1}} 题 / 共 {{questions.length}} 题</text>
+      <text>已答 {{answeredCount}} 题</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+    </view>
+  </view>
+
+  <!-- 题目区域 -->
+  <view class="question-area" wx:if="{{currentQuestion}}">
+    <view class="question-card card">
+      <view class="question-header">
+        <text class="type-tag">{{currentQuestion.type === 'single' ? '单选题' : currentQuestion.type === 'multiple' ? '多选题' : '判断题'}}</text>
+        <text class="question-number">{{currentIndex + 1}}</text>
+      </view>
+      <view class="question-content">{{currentQuestion.question}}</view>
+      <view class="question-hint" wx:if="{{currentQuestion.type === 'multiple'}}">（多选题，请选择所有正确答案）</view>
+    </view>
+
+    <!-- 选项列表 -->
+    <view class="options-list">
+      <view 
+        class="option-item {{item.selected ? 'selected' : ''}}"
+        wx:for="{{currentQuestion.options}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="toggleOption"
+      >
+        <view class="option-marker {{currentQuestion.type === 'multiple' ? 'square' : 'circle'}}">
+          <text wx:if="{{item.selected}}">{{item.key}}</text>
+        </view>
+        <view class="option-text">{{item.text}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="action-row">
+      <view class="action-btn" bindtap="toggleCard">
+        <text class="action-icon">📋</text>
+        <text>答题卡</text>
+      </view>
+      <button class="nav-btn" bindtap="prevQuestion" disabled="{{currentIndex === 0}}">上一题</button>
+      <button class="nav-btn next" bindtap="nextQuestion" wx:if="{{currentIndex < questions.length - 1}}">下一题</button>
+      <button class="nav-btn submit" bindtap="submitQuiz" wx:else>交卷</button>
+    </view>
+  </view>
+
+  <!-- 答题卡弹窗 -->
+  <view class="modal-mask" wx:if="{{showCard}}" bindtap="toggleCard"></view>
+  <view class="card-modal {{showCard ? 'show' : ''}}">
+    <view class="modal-header">
+      <text class="modal-title">答题卡</text>
+      <text class="modal-close" bindtap="toggleCard">✕</text>
+    </view>
+    <view class="card-legend">
+      <view class="legend-item"><view class="legend-box answered"></view>已答</view>
+      <view class="legend-item"><view class="legend-box"></view>未答</view>
+      <view class="legend-item"><view class="legend-box current"></view>当前</view>
+    </view>
+    <scroll-view class="card-scroll" scroll-y scroll-into-view="{{cardScrollInto}}">
+      <view class="card-grid">
+        <view 
+          class="card-number {{answers[item.id] && answers[item.id].length > 0 ? 'answered' : ''}} {{index === currentIndex ? 'current' : ''}}"
+          id="card-q-{{index}}"
+          wx:for="{{questions}}"
+          wx:key="id"
+          data-index="{{index}}"
+          bindtap="jumpToQuestion"
+        >{{index + 1}}</view>
+      </view>
+    </scroll-view>
+    <button class="modal-submit" hover-class="modal-submit-hover" hover-stay-time="100" bindtap="submitQuiz">
+      <view class="submit-content">
+        <text class="submit-icon">✓</text>
+        <text>提交试卷</text>
+      </view>
+    </button>
+  </view>
+</view>

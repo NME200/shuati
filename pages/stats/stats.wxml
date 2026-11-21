@@ -1,0 +1,182 @@
+<!--pages/stats/stats.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 个人中心 -->
+  <view wx:if="{{!showStatsDetail && !showRecordsDetail}}">
+    <!-- 用户信息 -->
+    <view class="user-card">
+      <view class="user-main">
+        <button class="avatar avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          <text wx:else>🐴</text>
+        </button>
+        <view class="user-info">
+          <input class="user-name user-name-input" type="nickname" value="{{userInfo.name}}" placeholder="点击设置昵称" bindinput="onNicknameInput" bindblur="onNicknameBlur" bindconfirm="onNicknameBlur" />
+          <view class="user-meta">用户ID: {{userInfo.id}} / 已学习 {{userInfo.days}} 天</view>
+        </view>
+      </view>
+      <button class="copy-btn" bindtap="copyUserId">复制用户ID</button>
+    </view>
+
+    <!-- 功能图标 -->
+    <view class="feature-grid">
+      <view class="feature-item" bindtap="showStatsPanel">
+        <view class="feature-icon icon-stats">📊</view>
+        <view class="feature-label">刷题统计</view>
+      </view>
+      <theme-toggle variant="feature" />
+      <view class="feature-item" bindtap="showFAQ">
+        <view class="feature-icon icon-help">❓</view>
+        <view class="feature-label">常见问题</view>
+      </view>
+      <view class="feature-item" bindtap="showRecommend">
+        <view class="feature-icon icon-recommend">💙</view>
+        <view class="feature-label">程序推荐</view>
+      </view>
+    </view>
+
+    <!-- 菜单列表 -->
+    <view class="menu-card">
+      <view class="menu-item" bindtap="showRecordsPanel">
+        <text>刷题记录</text><text class="arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="showRecycle">
+        <text>回收站</text><text class="arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="showTutorial">
+        <text>使用教程</text><text class="arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="showContact">
+        <text>联系客服</text><text class="arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="showAbout">
+        <text>关于我们</text><text class="arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="clearCache">
+        <text>清理缓存 ({{cacheSize}})</text><text class="arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 刷题记录详情 -->
+  <view wx:elif="{{showRecordsDetail}}">
+    <view class="detail-header">
+      <text class="back-btn" bindtap="hideRecordsPanel">‹ 返回</text>
+      <text class="detail-title">刷题记录</text>
+    </view>
+
+    <view class="history-list" wx:if="{{records.length > 0}}">
+      <view class="history-card" wx:for="{{records}}" wx:key="id">
+        <view class="history-top">
+          <view class="history-name">{{item.categoryName}}</view>
+          <view class="history-score {{item.score >= 60 ? 'pass' : 'fail'}}">{{item.score}}分</view>
+        </view>
+        <view class="history-meta">做{{item.correct}}/{{item.total}}题 · 错{{item.wrong}}题 · 用时{{item.durationText}}</view>
+        <view class="history-progress">
+          <view class="progress-correct" style="width: {{item.correctWidth}}%"></view>
+          <view class="progress-wrong" style="width: {{item.wrongWidth}}%"></view>
+        </view>
+        <view class="history-date">{{item.dateText}}</view>
+      </view>
+    </view>
+    <view class="history-empty" wx:else>暂无刷题记录</view>
+  </view>
+
+  <!-- 刷题统计详情 -->
+  <view wx:else>
+    <view class="detail-header">
+      <text class="back-btn" bindtap="hideStatsPanel">‹ 返回</text>
+      <text class="detail-title">刷题统计</text>
+    </view>
+
+    <view class="overview-section">
+      <view class="overview-card">
+        <view class="overview-main">
+          <view class="main-label">累计正确率</view>
+          <view class="main-value">{{stats.accuracy || 0}}%</view>
+          <view class="main-desc">共答对 {{stats.totalCorrect || 0}} / {{stats.totalQuestions || 0}} 题</view>
+        </view>
+        <view class="overview-grid">
+          <view class="overview-item">
+            <view class="item-value">{{stats.totalQuizzes || 0}}</view>
+            <view class="item-label">答题次数</view>
+          </view>
+          <view class="overview-item">
+            <view class="item-value">{{stats.streak || 0}}</view>
+            <view class="item-label">连续天数</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{activeTab === 'overview' ? 'active' : ''}}" data-tab="overview" bindtap="setTab">分类分析</view>
+      <view class="tab {{activeTab === 'records' ? 'active' : ''}}" data-tab="records" bindtap="setTab">答题记录</view>
+      <view class="tab {{activeTab === 'wrong' ? 'active' : ''}}" data-tab="wrong" bindtap="setTab">错题本</view>
+    </view>
+
+    <view class="tab-content" wx:if="{{activeTab === 'overview'}}">
+      <view class="menu-card" wx:if="{{categoryStats.length > 0}}">
+        <view class="category-stat" wx:for="{{categoryStats}}" wx:key="id">
+          <view class="stat-header">
+            <text class="stat-name">{{item.name}}</text>
+            <text class="stat-accuracy">{{item.accuracy}}%</text>
+          </view>
+          <view class="stat-bar">
+            <view class="stat-fill" style="width: {{item.accuracy}}%"></view>
+          </view>
+          <view class="stat-footer">
+            <text>答对 {{item.correct}}/{{item.total}} 题</text>
+            <text>练习 {{item.count}} 次</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>
+        <view class="empty-icon">📊</view>
+        <view>暂无分类数据</view>
+        <view class="empty-tip">完成一次答题后即可查看分析</view>
+      </view>
+    </view>
+
+    <view class="tab-content" wx:if="{{activeTab === 'records'}}">
+      <view class="records-header" wx:if="{{records.length > 0}}">
+        <text>最近 {{records.length}} 次答题</text>
+        <text class="clear-btn" bindtap="clearRecords">清空记录</text>
+      </view>
+      <view class="record-card menu-card" wx:for="{{records}}" wx:key="id">
+        <view class="record-left">
+          <view class="record-category">{{item.categoryName}}</view>
+          <view class="record-meta">{{item.dateText}} · {{item.durationText}}</view>
+        </view>
+        <view class="record-right">
+          <view class="record-score {{item.score >= 60 ? 'pass' : 'fail'}}">{{item.score}}分</view>
+          <view class="record-detail">{{item.correct}}/{{item.total}} 正确</view>
+        </view>
+      </view>
+      <view class="empty-state" wx:if="{{records.length === 0}}">
+        <view class="empty-icon">📝</view>
+        <view>暂无答题记录</view>
+        <view class="empty-tip">去首页开始答题吧</view>
+      </view>
+    </view>
+
+    <view class="tab-content" wx:if="{{activeTab === 'wrong'}}">
+      <view class="wrong-tip" wx:if="{{wrongQuestions.length > 0}}">以下是你答错次数最多的题目</view>
+      <view class="wrong-card menu-card" wx:for="{{wrongQuestions}}" wx:key="id">
+        <view class="wrong-header">
+          <text class="wrong-count">错误 {{item.count}} 次</text>
+          <text class="wrong-type">{{item.typeName}}</text>
+        </view>
+        <view class="wrong-question">{{item.question}}</view>
+        <view class="wrong-answer">
+          <text>正确答案：</text>
+          <text class="correct-answer">{{item.answerText}}</text>
+        </view>
+      </view>
+      <view class="empty-state" wx:if="{{wrongQuestions.length === 0}}">
+        <view class="empty-icon">✅</view>
+        <view>暂无错题</view>
+        <view class="empty-tip">继续保持！</view>
+      </view>
+    </view>
+  </view>
+</view>

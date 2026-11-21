@@ -1,0 +1,105 @@
+/* components/theme-toggle/theme-toggle.wxss */
+
+/* 宫格样式：与"我的"页功能图标风格一致 */
+.tt-feature {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.tt-feature::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8rpx;
+  bottom: 8rpx;
+  width: 1rpx;
+  background: var(--border-light, #eee);
+}
+
+.tt-feature-hover {
+  opacity: 0.7;
+}
+
+.tt-feature-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  margin: 0 auto 16rpx;
+  background: var(--bg-brand-soft, #e8f2ff);
+  transition: background-color 0.2s ease;
+}
+
+.tt-feature-icon.is-dark {
+  background: #3a2f55;
+}
+
+/* 组件根容器自身不带背景，避免夜间模式下出现方块底色；
+   主题 CSS 变量由页面根容器 .theme-dark 继承而来 */
+
+.tt-feature-label {
+  font-size: 26rpx;
+  color: var(--text-primary, #333);
+}
+
+.tt-feature-state {
+  font-size: 20rpx;
+  color: var(--text-muted, #999);
+  margin-top: 6rpx;
+}
+
+/* 行内开关样式：可用于任意页面顶部 */
+.tt-inline {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: var(--bg-card, #fff);
+  border-radius: 16rpx;
+  box-sizing: border-box;
+}
+
+.tt-inline-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.tt-inline-label {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-primary, #333);
+}
+
+.tt-switch {
+  width: 80rpx;
+  height: 44rpx;
+  border-radius: 22rpx;
+  background: #d9d9d9;
+  padding: 4rpx;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.tt-switch-knob {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.tt-inline.is-dark .tt-switch {
+  background: var(--brand, #1E7BEE);
+}
+
+.tt-inline.is-dark .tt-switch-knob {
+  transform: translateX(36rpx);
+}
+
+.tt-hover {
+  opacity: 0.85;
+}

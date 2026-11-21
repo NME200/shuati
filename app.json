@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/bank/bank",
+    "pages/bank-import/bank-import",
+    "pages/quiz/quiz",
+    "pages/result/result",
+    "pages/stats/stats"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": ""
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1E7BEE",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "刷题" },
+      { "pagePath": "pages/bank/bank", "text": "录题" },
+      { "pagePath": "pages/stats/stats", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "darkmode": true,
+  "themeLocation": "theme.json",
+  "sitemapLocation": "sitemap.json"
+}

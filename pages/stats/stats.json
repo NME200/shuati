@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "佛脚刷题",
+  "usingComponents": {
+    "theme-toggle": "/components/theme-toggle/theme-toggle"
+  }
+}

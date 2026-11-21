@@ -1,0 +1,158 @@
+/**app.wxss**/
+/* ============================================================
+   主题变量系统
+   - 默认（page 上）为日间主题
+   - 任意容器添加 .theme-dark 类，其内部变量自动切换为夜间配色
+   ============================================================ */
+page {
+  /* 背景 */
+  --bg-page: #f5f6fa;
+  --bg-card: #ffffff;
+  --bg-subtle: #f5f6fa;
+  --bg-input: #f8f9fc;
+  --bg-brand-soft: #f0f5ff;
+  --bg-success-soft: #f6ffed;
+  --bg-danger-soft: #fff2f0;
+
+  /* 文字 */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --text-faint: #bbbbbb;
+  --text-inverse: #ffffff;
+
+  /* 边框 / 分隔 */
+  --border-light: #f0f0f0;
+  --border-base: #e5e5e5;
+  --border-strong: #d5d5d5;
+
+  /* 品牌 / 语义色 */
+  --brand: #1E7BEE;
+  --brand-light: #4A90E2;
+  --brand-soft-text: #4A90E2;
+  --success: #52C41A;
+  --success-strong: #00C853;
+  --danger: #FF4D4F;
+  --danger-strong: #FF5252;
+  --warning: #FA8C16;
+
+  /* 阴影 */
+  --shadow-card: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2rpx 10rpx rgba(0, 0, 0, 0.04);
+  --shadow-bar: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
+  --shadow-overlay: 0 8rpx 32rpx rgba(30, 123, 238, 0.3);
+
+  /* 渐变 */
+  --gradient-brand: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  --gradient-brand-strong: linear-gradient(135deg, #4A9BFF 0%, #1E7BEE 100%);
+  --gradient-stat: linear-gradient(90deg, #4A90E2, #6BB5F5);
+
+  background: var(--bg-page);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* 夜间主题：仅需加到页面根容器，变量自动向下继承 */
+.theme-dark {
+  --bg-page: #121212;
+  --bg-card: #1e1e1e;
+  --bg-subtle: #2a2a2e;
+  --bg-input: #242428;
+  --bg-brand-soft: #16283a;
+  --bg-success-soft: #16291a;
+  --bg-danger-soft: #331c1f;
+
+  --text-primary: #e5e5e7;
+  --text-secondary: #b0b0b5;
+  --text-muted: #8e8e93;
+  --text-faint: #6c6c72;
+  --text-inverse: #ffffff;
+
+  --border-light: #2c2c30;
+  --border-base: #3a3a3f;
+  --border-strong: #4a4a50;
+
+  --brand: #5AA8FF;
+  --brand-light: #6BB5F5;
+  --brand-soft-text: #7CB8FF;
+  --success: #73d13d;
+  --success-strong: #73d13d;
+  --danger: #ff7875;
+  --danger-strong: #ff7875;
+  --warning: #ffc069;
+
+  --shadow-card: 0 4rpx 20rpx rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2rpx 10rpx rgba(0, 0, 0, 0.4);
+  --shadow-bar: 0 -4rpx 20rpx rgba(0, 0, 0, 0.6);
+  --shadow-overlay: 0 8rpx 32rpx rgba(0, 0, 0, 0.6);
+
+  --gradient-brand: linear-gradient(135deg, #3A7FD5 0%, #2B6CB0 100%);
+  --gradient-brand-strong: linear-gradient(135deg, #3D8BE8 0%, #2B6FC7 100%);
+  --gradient-stat: linear-gradient(90deg, #3D8BE8, #5AA8FF);
+
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 16rpx;
+  box-shadow: var(--shadow-card);
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background: var(--brand-light);
+  color: var(--text-inverse);
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  line-height: 88rpx;
+  height: 88rpx;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-secondary {
+  background: var(--bg-brand-soft);
+  color: var(--brand-soft-text);
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  border: 1rpx solid var(--brand);
+  line-height: 80rpx;
+  height: 80rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 32rpx 0 20rpx;
+}
+
+.text-muted {
+  color: var(--text-muted);
+  font-size: 26rpx;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  background: var(--bg-brand-soft);
+  color: var(--brand-soft-text);
+}

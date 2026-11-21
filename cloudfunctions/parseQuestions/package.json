@@ -1,0 +1,13 @@
+{
+  "name": "parseQuestions",
+  "version": "1.0.0",
+  "description": "解析 Word/Excel/PDF/URL 为题库题目",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "mammoth": "^1.8.0",
+    "xlsx": "^0.18.5",
+    "pdf-parse": "^1.1.1",
+    "cheerio": "^1.0.0-rc.12"
+  }
+}

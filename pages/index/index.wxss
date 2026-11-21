@@ -1,0 +1,136 @@
+/* 分类标签 */
+.category-tabs {
+  white-space: nowrap;
+  background: var(--bg-card);
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid var(--border-light);
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 14rpx 32rpx;
+  margin-right: 16rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+
+.tab-item.active {
+  background: var(--brand);
+  color: var(--text-inverse);
+  font-weight: 500;
+}
+
+/* 标题 */
+.section-header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 32rpx 16rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 题库列表 */
+.bank-list {
+  padding: 0 32rpx;
+}
+
+.bank-card {
+  background: var(--bg-card);
+  border-radius: 14rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+.bank-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bank-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bank-arrow {
+  font-size: 40rpx;
+  color: var(--text-faint);
+  margin-left: 16rpx;
+}
+
+.bank-category {
+  display: inline-block;
+  font-size: 22rpx;
+  color: var(--brand-soft-text);
+  background: var(--bg-brand-soft);
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  margin-top: 8rpx;
+}
+
+.bank-meta {
+  font-size: 24rpx;
+  color: var(--text-muted);
+  margin-top: 14rpx;
+}
+
+.bank-progress {
+  display: flex;
+  height: 8rpx;
+  border-radius: 4rpx;
+  overflow: hidden;
+  background: var(--border-light);
+  margin-top: 14rpx;
+}
+
+.progress-correct {
+  height: 100%;
+  background: var(--success-strong);
+}
+
+.progress-wrong {
+  height: 100%;
+  background: var(--danger-strong);
+}
+
+.bank-date {
+  font-size: 22rpx;
+  color: var(--text-faint);
+  text-align: right;
+  margin-top: 12rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 140rpx 0;
+  color: var(--text-muted);
+  font-size: 28rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+}
+
+.empty-tip {
+  font-size: 24rpx;
+  color: var(--text-faint);
+  margin-top: 12rpx;
+}
+
+.bottom-space {
+  height: 40rpx;
+}

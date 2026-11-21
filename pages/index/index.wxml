@@ -1,0 +1,49 @@
+<!--index.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 题库分类标签 -->
+  <scroll-view class="category-tabs" scroll-x>
+    <view 
+      class="tab-item {{activeCategory === item.id ? 'active' : ''}}"
+      wx:for="{{categoryTabs}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="switchCategory"
+    >{{item.name}}</view>
+  </scroll-view>
+
+  <!-- 题库列表标题 -->
+  <view class="section-header">
+    <text class="section-title">题库列表</text>
+  </view>
+
+  <!-- 题库列表 -->
+  <view class="bank-list">
+    <view 
+      class="bank-card" 
+      wx:for="{{banks}}" 
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onBankTap"
+    >
+      <view class="bank-top">
+        <view class="bank-name">{{item.title}}</view>
+        <view class="bank-arrow">›</view>
+      </view>
+      <view class="bank-category">{{item.categoryName}}</view>
+      <view class="bank-meta">共{{item.questionCount}}题 · 做{{item.doneCount}}题 · 错{{item.wrongCount}}题</view>
+      <view class="bank-progress">
+        <view class="progress-correct" style="width: {{item.correctWidth}}%"></view>
+        <view class="progress-wrong" style="width: {{item.wrongWidth}}%"></view>
+      </view>
+      <view class="bank-date">最近练习 {{item.dateText}}</view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{banks.length === 0}}">
+    <view class="empty-icon">📚</view>
+    <view>该分类下暂无题库</view>
+    <view class="empty-tip">请到录题页创建题库</view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

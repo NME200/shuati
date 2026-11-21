@@ -1,0 +1,71 @@
+<!--pages/result/result.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 成绩卡片 -->
+  <view class="result-header">
+    <view class="result-bg"></view>
+    <view class="result-content">
+      <view class="result-grade">{{grade}}</view>
+      <view class="result-score">{{score}}<text class="score-unit">分</text></view>
+      <view class="result-text">{{gradeText}}</view>
+      <view class="result-stats">
+        <view class="result-stat">
+          <view class="stat-num">{{correct}}/{{total}}</view>
+          <view class="stat-label">答对题数</view>
+        </view>
+        <view class="result-stat">
+          <view class="stat-num">{{wrong}}</view>
+          <view class="stat-label">答错题数</view>
+        </view>
+        <view class="result-stat">
+          <view class="stat-num">{{durationText}}</view>
+          <view class="stat-label">用时</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="action-btn retry" bindtap="retryQuiz">🔄 再答一次</button>
+    <button class="action-btn" bindtap="goStats">📊 查看统计</button>
+    <button class="action-btn" bindtap="goHome">🏠 返回首页</button>
+  </view>
+
+  <!-- 答题详情 -->
+  <view class="detail-section">
+    <view class="detail-header">
+      <text class="section-title">答题详情</text>
+      <text class="filter-toggle" bindtap="toggleFilter">
+        {{showWrongOnly ? '显示全部' : '只看错题'}}
+      </text>
+    </view>
+
+    <view class="detail-list">
+      <block wx:for="{{displayDetails}}" wx:key="id">
+        <view class="detail-card card">
+          <view class="detail-top">
+            <view class="detail-status {{item.isCorrect ? 'correct' : 'wrong'}}">
+              {{item.isCorrect ? '✓ 正确' : '✗ 错误'}}
+            </view>
+            <view class="detail-index">第 {{index + 1}} 题</view>
+          </view>
+          <view class="detail-question">{{item.question}}</view>
+          <view class="answer-row">
+            <text class="answer-label">你的答案：</text>
+            <text class="answer-value {{item.isCorrect ? 'correct' : 'wrong'}}">{{item.userAnswerText}}</text>
+          </view>
+          <view class="answer-row" wx:if="{{!item.isCorrect}}">
+            <text class="answer-label">正确答案：</text>
+            <text class="answer-value correct">{{item.correctAnswerText}}</text>
+          </view>
+          <view class="explanation" wx:if="{{!item.isCorrect && item.explanation}}">
+            <view class="explanation-title">💡 解析</view>
+            <view class="explanation-text">{{item.explanation}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

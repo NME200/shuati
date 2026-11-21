@@ -1,0 +1,84 @@
+<!--pages/bank-import/bank-import.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 配置区 -->
+  <view class="config-section">
+    <view class="config-row">
+      <text class="config-label">导入到题库</text>
+      <picker mode="selector" range="{{bankNames}}" value="{{bankIndex}}" bindchange="onBankChange">
+        <view class="picker-value">{{bankNames[bankIndex] || '请先创建题库'}} ▾</view>
+      </picker>
+    </view>
+    <view class="config-row">
+      <text class="config-label">导入方式</text>
+      <picker mode="selector" range="{{sources}}" range-key="name" value="{{sourceIndex}}" bindchange="onSourceChange">
+        <view class="picker-value">{{sources[sourceIndex].name}} ▾</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 格式说明 -->
+  <view class="help-card">
+    <view class="help-title">录入格式说明</view>
+    <view class="help-text">支持自动识别常见题型，无需固定模板：</view>
+    <view class="help-note">• 选择题：识别“1.题干（ B ）”及 A/B/C/D 选项，选项可在同一行
+• 判断题：识别“（ √ ）/（ × ）”，自动转为正确/错误
+• 填空题：识别 ____答案____ 或高亮答案，生成“答案 + 其他”选项
+• 简答题：自动提取题干与参考答案
+• 也兼容“答案：B / 解析：...”的传统格式</view>
+  </view>
+
+  <!-- 文本输入 -->
+  <view class="input-section" wx:if="{{sources[sourceIndex].value === 'text'}}">
+    <view class="input-header">
+      <text class="input-label">题目内容</text>
+      <view class="input-actions">
+        <text class="action-link" bindtap="loadDemo">填入示例</text>
+        <text class="action-link" bindtap="clearInput">清空</text>
+      </view>
+    </view>
+    <textarea class="input-area" placeholder="在此粘贴题目内容..." value="{{inputText}}" bindinput="onInput" maxlength="-1" />
+  </view>
+
+  <!-- 文件选择 -->
+  <view class="input-section" wx:elif="{{sources[sourceIndex].value === 'file'}}">
+    <view class="input-label">选择文件（Word / Excel / PDF / TXT）</view>
+    <view class="file-picker" bindtap="chooseFile">
+      <text class="file-icon">📄</text>
+      <text class="file-name">{{fileName || '点击选择文件'}}</text>
+    </view>
+    <view class="input-note">从微信聊天中选择文件，支持 .docx / .xlsx / .xls / .pdf / .txt</view>
+  </view>
+
+  <!-- URL 输入 -->
+  <view class="input-section" wx:else>
+    <view class="input-label">网络链接</view>
+    <input class="url-input" placeholder="粘贴网页链接或文件直链" value="{{url}}" bindinput="onUrlInput" />
+    <view class="input-note">支持网页文本抓取，以及 .docx/.xlsx/.pdf 文件直链</view>
+  </view>
+
+  <!-- 解析预览 -->
+  <view class="preview-section" wx:if="{{parsedCount > 0}}">
+    <view class="preview-title">解析预览（共 {{parsedCount}} 题，显示前 5 题）</view>
+    <view class="preview-item" wx:for="{{preview}}" wx:key="id">
+      <view class="preview-q">{{index + 1}}. {{item.question}}</view>
+      <view class="preview-answer">答案：{{item.answer}}</view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar">
+    <button class="btn-parse" hover-class="btn-parse-hover" hover-stay-time="100" bindtap="parseQuestions" disabled="{{parsing}}">
+      <view class="btn-content">
+        <view wx:if="{{parsing}}" class="btn-loading"></view>
+        <text wx:else class="btn-icon">🔍</text>
+        <text>{{parsing ? '解析中...' : '解析题目'}}</text>
+      </view>
+    </button>
+    <button class="btn-import" hover-class="btn-import-hover" hover-stay-time="100" bindtap="importQuestions" disabled="{{parsedCount === 0}}">
+      <view class="btn-content">
+        <text class="btn-icon">📥</text>
+        <text>导入题库</text>
+      </view>
+    </button>
+  </view>
+</view>

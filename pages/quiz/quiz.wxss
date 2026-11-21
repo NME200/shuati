@@ -1,0 +1,370 @@
+/* 顶部信息栏 */
+.top-bar {
+  padding: 28rpx 32rpx;
+  background: var(--bg-card);
+}
+
+.top-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.timer {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: var(--text-muted);
+  margin-top: 20rpx;
+}
+
+.progress-bar {
+  height: 8rpx;
+  background: var(--border-light);
+  border-radius: 4rpx;
+  margin-top: 12rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--brand-light);
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+/* 题目区域 */
+.question-area {
+  padding: 24rpx 32rpx 200rpx;
+}
+
+.question-card {
+  padding: 32rpx;
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.type-tag {
+  font-size: 24rpx;
+  color: var(--brand-soft-text);
+  background: var(--bg-brand-soft);
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.question-number {
+  font-size: 28rpx;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+.question-content {
+  font-size: 34rpx;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.question-hint {
+  font-size: 24rpx;
+  color: var(--warning);
+  margin-top: 12rpx;
+}
+
+/* 选项列表 */
+.options-list {
+  margin-top: 24rpx;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 32rpx;
+  background: var(--bg-card);
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.option-item.selected {
+  border-color: var(--brand);
+  background: var(--bg-brand-soft);
+}
+
+.option-marker {
+  width: 44rpx;
+  height: 44rpx;
+  border: 2rpx solid var(--border-strong);
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: var(--text-inverse);
+  font-weight: 600;
+}
+
+.option-marker.circle {
+  border-radius: 50%;
+}
+
+.option-marker.square {
+  border-radius: 8rpx;
+}
+
+.option-item.selected .option-marker {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+.option-text {
+  font-size: 30rpx;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 32rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  box-shadow: var(--shadow-bar);
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  min-width: 80rpx;
+}
+
+.action-icon {
+  font-size: 36rpx;
+  margin-bottom: 4rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-btn::after {
+  border: none;
+}
+
+.nav-btn[disabled] {
+  background: var(--bg-subtle);
+  color: var(--text-faint);
+}
+
+.nav-btn.next {
+  background: var(--brand-light);
+  color: var(--text-inverse);
+}
+
+.nav-btn.submit {
+  background: #52C41A;
+  color: #fff;
+}
+
+/* 答题卡弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.card-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 76vh;
+  background: var(--bg-card);
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 32rpx;
+  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  z-index: 101;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.card-modal.show {
+  transform: translateY(0);
+}
+
+.modal-header,
+.card-legend,
+.modal-submit {
+  flex-shrink: 0;
+}
+
+.card-scroll {
+  flex: 1;
+  min-height: 0;
+  max-height: 54vh;
+  margin-bottom: 24rpx;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 32rpx;
+  color: var(--text-muted);
+  padding: 8rpx;
+}
+
+.card-legend {
+  display: flex;
+  gap: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+.legend-box {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 6rpx;
+  border: 1rpx solid var(--border-base);
+}
+
+.legend-box.answered {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+.legend-box.current {
+  border-color: var(--brand);
+  border-width: 2rpx;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16rpx;
+}
+
+.card-number {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  background: var(--bg-subtle);
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  border: 2rpx solid transparent;
+}
+
+.card-number.answered {
+  background: var(--brand);
+  color: var(--text-inverse);
+}
+
+.card-number.current {
+  border-color: var(--brand);
+}
+
+.modal-submit {
+  width: 100%;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 24rpx;
+  background: var(--gradient-brand-strong);
+  color: var(--text-inverse);
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+  box-shadow: 0 8rpx 20rpx rgba(30, 123, 238, 0.28);
+}
+
+.modal-submit::after {
+  border: none;
+}
+
+.submit-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-icon {
+  font-size: 34rpx;
+  line-height: 1;
+  margin-right: 14rpx;
+}
+
+.modal-submit-hover {
+  transform: scale(0.98);
+  opacity: 0.92;
+}

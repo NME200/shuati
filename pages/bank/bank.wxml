@@ -1,0 +1,95 @@
+<!--pages/bank/bank.wxml-->
+<view class="container {{isDark ? 'theme-dark' : ''}}">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <view class="header-left">
+      <view class="title-line"></view>
+      <text class="header-title">题库分类</text>
+    </view>
+    <view class="header-actions">
+      <view class="btn-create-cat" bindtap="showCreateCategory">创建题库分类</view>
+      <view class="btn-import" bindtap="goToImport">电脑录题</view>
+    </view>
+  </view>
+
+  <!-- 分类分组列表 -->
+  <view class="group-list">
+    <view class="group" wx:for="{{groups}}" wx:key="id">
+      <!-- 分类行（左滑删除） -->
+      <view class="swipe-wrap">
+        <view class="swipe-del-btn" data-id="{{item.id}}" catchtap="deleteCategory">删除</view>
+        <view 
+          class="group-header"
+          style="transform: translateX({{item.swiped ? '-160rpx' : '0'}}); transition: transform 0.2s ease;"
+          data-id="{{item.id}}"
+          data-index="{{index}}"
+          bindtouchstart="onTouchStart"
+          bindtouchmove="onTouchMove"
+          bindtouchend="onTouchEnd"
+          bindtap="toggleGroup"
+        >
+          <view class="group-arrow">{{item.expanded ? '▾' : '▸'}}</view>
+          <view class="group-name">{{item.name}}</view>
+          <view class="group-count">{{item.banks.length}}个题库</view>
+        </view>
+      </view>
+
+      <!-- 该分类下的题库 -->
+      <view class="group-banks" wx:if="{{item.expanded}}">
+        <view 
+          class="bank-item" 
+          wx:for="{{item.banks}}" 
+          wx:for-item="bank"
+          wx:key="id"
+          data-id="{{bank.id}}"
+          bindtap="onBankTap"
+        >
+          <view class="bank-info">
+            <view class="bank-name">{{bank.name}}</view>
+            <view class="bank-meta">{{bank.count}}题 / {{bank.dateText}}</view>
+          </view>
+          <view class="bank-circle" data-id="{{bank.id}}" catchtap="onBankMore"></view>
+        </view>
+
+        <!-- 创建题库入口 -->
+        <view class="add-bank" data-id="{{item.id}}" bindtap="showCreateBank">＋ 创建题库</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 创建分类弹窗：用 wx:if 彻底销毁原生 input，避免真机上 placeholder 穿透显示 -->
+  <block wx:if="{{showCategoryModal}}">
+    <view class="modal-mask" bindtap="hideCreateCategory"></view>
+    <view class="modal">
+      <view class="modal-title">创建题库分类</view>
+      <input class="name-input" placeholder="如：计算机类" value="{{inputName}}" bindinput="onNameInput" focus="{{showCategoryModal}}"/>
+      <view class="modal-buttons">
+        <button class="modal-btn cancel" bindtap="hideCreateCategory">取消</button>
+        <button class="modal-btn confirm" bindtap="confirmCreateCategory">创建</button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 创建题库弹窗 -->
+  <block wx:if="{{showBankModal}}">
+    <view class="modal-mask" bindtap="hideCreateBank"></view>
+    <view class="modal">
+      <view class="modal-title">创建题库</view>
+      <input class="name-input" placeholder="如：网络技术题库" value="{{inputName}}" bindinput="onNameInput" focus="{{showBankModal}}"/>
+      <view class="modal-label">所属分类</view>
+      <view class="category-chips">
+        <view 
+          class="chip {{activeCategoryId === item.id ? 'active' : ''}}"
+          wx:for="{{bankCategoryOptions}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="selectBankCategory"
+        >{{item.name}}</view>
+      </view>
+      <view class="modal-buttons">
+        <button class="modal-btn cancel" bindtap="hideCreateBank">取消</button>
+        <button class="modal-btn confirm" bindtap="confirmCreateBank">创建</button>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,12 @@
+<!-- components/theme-toggle/theme-toggle.wxml -->
+<view wx:if="{{variant === 'inline'}}" class="tt-inline {{isDark ? 'is-dark' : ''}}" bindtap="onToggle" hover-class="tt-hover" hover-stay-time="100" role="button" aria-label="{{isDark ? '切换到日间模式' : '切换到夜间模式'}}">
+  <view class="tt-inline-icon">{{isDark ? '☀️' : '🌙'}}</view>
+  <view class="tt-inline-label">{{isDark ? '日间模式' : '夜间模式'}}</view>
+  <view class="tt-switch"><view class="tt-switch-knob"></view></view>
+</view>
+
+<view wx:else class="tt-feature" bindtap="onToggle" hover-class="tt-feature-hover" hover-stay-time="100" role="button" aria-label="{{isDark ? '切换到日间模式' : '切换到夜间模式'}}">
+  <view class="tt-feature-icon {{isDark ? 'is-dark' : ''}}">{{isDark ? '☀️' : '🌙'}}</view>
+  <view class="tt-feature-label">{{isDark ? '日间模式' : '夜间模式'}}</view>
+  <view class="tt-feature-state">{{isDark ? '夜间已开启' : '夜间已关闭'}}</view>
+</view>

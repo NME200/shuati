@@ -1,0 +1,18 @@
+{
+  "envId": "cloud1-dqgtbohwe97f1bc9",
+  "framework": {
+    "name": "miniprogram",
+    "plugins": {}
+  },
+  "functions": [
+    {
+      "name": "parseQuestions",
+      "dir": "cloudfunctions/parseQuestions",
+      "runtime": "Nodejs20.19",
+      "entry": "index.main",
+      "timeout": 60,
+      "memorySize": 512,
+      "installDependency": false
+    }
+  ]
+}

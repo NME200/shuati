@@ -1,0 +1,279 @@
+/* 顶部 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 32rpx;
+  background: var(--bg-card);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  min-width: 180rpx;
+}
+
+.title-line {
+  width: 6rpx;
+  height: 32rpx;
+  background: var(--brand);
+  border-radius: 3rpx;
+  margin-right: 12rpx;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.btn-create-cat,
+.btn-import {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56rpx;
+  padding: 0 20rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background: var(--brand);
+  color: var(--text-inverse);
+  border: 2rpx solid var(--brand);
+}
+
+/* 分组列表 */
+.group-list {
+  padding: 24rpx 32rpx 40rpx;
+}
+
+.group {
+  margin-bottom: 20rpx;
+}
+
+.swipe-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12rpx;
+  background: #FF4D4F;
+  box-shadow: var(--shadow-sm);
+}
+
+.swipe-del-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 160rpx;
+  background: #FF4D4F;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+.group-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  padding: 26rpx 28rpx;
+}
+
+.group-arrow {
+  width: 36rpx;
+  font-size: 26rpx;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.group-name {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-count {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+/* 分类下的题库 */
+.group-banks {
+  margin: 10rpx 0 0 46rpx;
+  padding-left: 24rpx;
+  border-left: 3rpx solid var(--border-base);
+}
+
+.bank-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 12rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+.bank-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bank-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.bank-meta {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}
+
+.bank-circle {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--border-strong);
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.add-bank {
+  padding: 20rpx;
+  font-size: 26rpx;
+  color: var(--brand-soft-text);
+  border: 2rpx dashed var(--border-base);
+  border-radius: 12rpx;
+  text-align: center;
+  background: var(--bg-brand-soft);
+}
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+}
+
+.modal {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  top: 50%;
+  background: var(--bg-card);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  z-index: 101;
+  transform: translateY(-50%);
+  animation: modal-in 0.2s ease;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 32rpx;
+  color: var(--text-primary);
+}
+
+.name-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  background: var(--bg-subtle);
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.modal-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin: 28rpx 0 16rpx;
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip {
+  padding: 12rpx 24rpx;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+
+.chip.active {
+  background: var(--brand);
+  color: var(--text-inverse);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  margin: 0;
+}
+
+.modal-btn::after {
+  border: none;
+}
+
+.modal-btn.cancel {
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+
+.modal-btn.confirm {
+  background: var(--brand);
+  color: var(--text-inverse);
+}
