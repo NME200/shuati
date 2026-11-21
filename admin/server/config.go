@@ -31,7 +31,7 @@ func loadConfig() Config {
 	ttlHours, _ := strconv.Atoi(env("JWT_TTL_HOURS", "12"))
 	return Config{
 		Port:          env("PORT", "80"),
-		EnvID:         env("TCB_ENV_ID", "unfair-rook-d3gum8kdyd3761bc5"),
+		EnvID:         env("TCB_ENV_ID", "cloud1-d0gzpuodv51a600cc"),
 		APIKey:        env("TCB_API_KEY", ""),
 		JWTSecret:     env("JWT_SECRET", "change-me-in-production"),
 		AdminUser:     env("ADMIN_USER", "admin"),

@@ -2,7 +2,7 @@
 const theme = require('./utils/theme')
 const auth = require('./utils/auth')
 
-const CLOUD_ENV = 'cloud1-dqgtbohwe97f1bc9'
+const CLOUD_ENV = 'cloud1-d0gzpuodv51a600cc'
 
 App({
   globalData: {
@@ -27,10 +27,11 @@ App({
 
     try {
       wx.cloud.init({
+        env: CLOUD_ENV,
         traceUser: true
       })
       this.globalData.cloudReady = true
-      console.log('[cloud] init ok, env auto-selected by devtools')
+      console.log('[cloud] init ok, env =', CLOUD_ENV)
 
       // 尽早获取可信用户身份，后续数据层按 openid 隔离
       auth.init()

@@ -30,7 +30,7 @@ admin/
 | 变量 | 说明 | 示例 |
 |---|---|---|
 | `PORT` | 服务监听端口，云托管注入 | `80` |
-| `TCB_ENV_ID` | 云开发环境 ID | `cloud1-dqgtbohwe97f1bc9` |
+| `TCB_ENV_ID` | 云开发环境 ID | `cloud1-d0gzpuodv51a600cc` |
 | `TCB_API_KEY` | 管理端 API Key（Bearer），**严禁放前端** | 控制台 ApiKey 管理页获取 |
 | `JWT_SECRET` | JWT 签名密钥，随机长字符串 | 自行生成 |
 | `ADMIN_USER` | 管理员用户名 | `admin` |
@@ -54,7 +54,7 @@ admin/
 cd admin/server
 tcb login                        # 首次需要登录
 tcb cloudrun deploy \
-  --env-id cloud1-dqgtbohwe97f1bc9 \
+  --env-id cloud1-d0gzpuodv51a600cc \
   --service-name shuati-admin-api \
   --source ./ \
   --port 80 \
@@ -76,7 +76,7 @@ VITE_API_BASE=https://上一步拿到的云托管地址
 cd admin/web
 npm install
 npm run build
-tcb hosting deploy ./dist -e cloud1-dqgtbohwe97f1bc9
+tcb hosting deploy ./dist cloud-admin -e cloud1-d0gzpuodv51a600cc
 ```
 静态托管域名从控制台获取，形如 `https://cloud1-xxx-xxx.tcloudbaseapp.com`。
 
@@ -110,7 +110,19 @@ VITE_API_TARGET=http://localhost:8080 npm run dev
 - `GET  /api/users` 用户列表（含答题次数）
 - `DELETE /api/{banks|questions|categories|records}/delete?id=` 基础删除
 
+## 已部署（2026-11-22）
+
+- 环境：`cloud1-d0gzpuodv51a600cc`（微信体验版，ap-shanghai，账号 UIN 100055449877）
+- 后端云托管：`shuati-admin-api`，公网地址 `https://shuati-admin-api-352065-10-1538306720.sh.run.tcloudbase.com`
+- 前端静态托管：`https://cloud1-d0gzpuodv51a600cc-1538306720.tcloudbaseapp.com/cloud-admin/`
+- 管理员：`admin` / `admin123456`（JWT_SECRET、API Key 等以环境变量形式配置在云托管服务中）
+- 已验证：health/login/overview/banks/questions/records/users 接口全部返回正常，401 鉴权生效，CORS 预检通过
+- 数据实测：题库 1、题目 203、分类 1、用户 1、答题记录 0
+- 说明：原环境 `unfair-rook-d3gum8kdyd3761bc5` 已删除，旧的服务与静态托管均已不存在，本次为全量重新部署
+- 待办：更换 ADMIN_PASSWORD / JWT_SECRET；轮换曾明文提供的腾讯云账号密钥
+
 ## 验证状态
 - Go：`go build` / `go vet` 通过；health、login、JWT 鉴权冒烟测试通过
 - Vue：`npm run build` 构建通过
-- 未执行云端部署（需要你的 tcb 登录态与管理端 API Key）
+- 云端：镜像构建成功，服务状态 normal，端到端接口验证通过
+- 数据格式：EJSON 的 `$numberInt/$numberDouble/$date` 已解析为真实数字类型，前端日期格式化正常

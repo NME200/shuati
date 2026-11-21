@@ -7,7 +7,7 @@ const SOURCES = [
   { value: 'url', name: '网络URL' }
 ]
 
-const CLOUD_ENV = 'cloud1-dqgtbohwe97f1bc9'
+const CLOUD_ENV = 'cloud1-d0gzpuodv51a600cc'
 
 function describeError(err) {
   if (!err) return '未知错误'

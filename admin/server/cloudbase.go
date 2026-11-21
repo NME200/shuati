@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -175,13 +177,26 @@ func expandEJSONValue(v interface{}) interface{} {
 			return oid
 		}
 		if num, ok := val["$numberInt"].(string); ok && len(val) == 1 {
+			if n, err := strconv.ParseInt(num, 10, 64); err == nil {
+				return n
+			}
 			return num
 		}
 		if num, ok := val["$numberDouble"].(string); ok && len(val) == 1 {
+			if f, err := strconv.ParseFloat(num, 64); err == nil {
+				// 整数值（如 count、时间戳）转成 int64，避免前端得到 "0.0"/"1.79E+12" 这类字符串
+				if f == math.Trunc(f) && math.Abs(f) < 1e15 {
+					return int64(f)
+				}
+				return f
+			}
 			return num
 		}
 		if d, ok := val["$date"].(string); ok && len(val) == 1 {
 			return d
+		}
+		if d, ok := val["$date"].(float64); ok && len(val) == 1 {
+			return int64(d)
 		}
 		// 普通嵌套对象
 		return fromEJSON(val)
